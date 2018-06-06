@@ -8,6 +8,7 @@ import MonthlySales from '../components/dashboard/MonthlySales'
 import globalStyles from '../styles'
 import Data from '../data'
 import api from '../components/api'
+import store from '../store/index'
 
 const status = {
     projects: 0,
@@ -17,7 +18,7 @@ const status = {
 const fetchProjects = () => {
     api.get('project', {
         headers: {
-            authorization: 'Bearer ' + localStorage.getItem('access_token')
+            authorization: 'Bearer ' + store.getState().authorization.token
         }
     })
         .then((response) => {
@@ -28,7 +29,7 @@ const fetchProjects = () => {
 const fetchEmployees = () => {
     api.get('user', {
         headers: {
-            authorization: 'Bearer ' + localStorage.getItem('access_token')
+            authorization: 'Bearer ' + store.getState().authorization.token
         }
     })
         .then((response) => {

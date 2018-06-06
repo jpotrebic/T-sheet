@@ -5,12 +5,16 @@ import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
 import Menu from 'material-ui/svg-icons/navigation/menu'
 import {white} from 'material-ui/styles/colors'
+import store from '../store/index'
+import { addAuthorization } from '../actions/index'
 
 class Header extends React.Component {
     signOut() {
-        localStorage.setItem('access_token', null)
-        localStorage.setItem('role', null)
-        localStorage.setItem('username', null)
+        store.dispatch(addAuthorization({
+            token: null,
+            role: null,
+            username: null
+        }))
         browserHistory.push('/login')
     }
 

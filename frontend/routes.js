@@ -5,9 +5,10 @@ import Dashboard from './containers/DashboardPage'
 import LoginPage from './containers/LoginPage'
 import NotFoundPage from './containers/NotFoundPage.js'
 import WorkEntryPage from './containers/WorkEntryPage'
+import store from './store/index'
 
 function requireAuth() {
-    const auth = localStorage.getItem('access_token')
+    const auth = store.getState().authorization.token
     if (!auth)
         browserHistory.push('/login')
 }

@@ -8,6 +8,7 @@ import {grey400} from 'material-ui/styles/colors'
 import Divider from 'material-ui/Divider'
 import PageBase from '../components/PageBase'
 import axios from 'axios'
+import store from '../store/index'
 
 let projects = [{id: 1, name: 'free time'}]
 const form = {
@@ -24,7 +25,7 @@ const fetchProjects = () => {
         method: 'get',
         url: 'http://127.0.0.1:1080/api/project',
         headers: {
-            authorization: 'Bearer ' + localStorage.getItem('access_token')
+            authorization: 'Bearer ' + store.getState().authorization.token
         }
     })
         .then((response) => {
@@ -38,7 +39,7 @@ const logWork = () => {
         url: 'http://127.0.0.1:1080/api/entry',
         data: form,
         headers: {
-            authorization: 'Bearer ' + localStorage.getItem('access_token')
+            authorization: 'Bearer ' + store.getState().authorization.token
         }
     })
         .then(() => {

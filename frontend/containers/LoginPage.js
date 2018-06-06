@@ -7,6 +7,8 @@ import TextField from 'material-ui/TextField'
 import {browserHistory} from 'react-router'
 import ThemeDefault from '../theme-default'
 import api from '../components/api'
+import store from '../store/index'
+import { addAuthorization } from '../actions/index'
 
 const input = {
     username: null,
@@ -22,15 +24,19 @@ const loginClick = () => {
         password: input.password
     })
         .then((response) => {
-            localStorage.setItem('access_token', response.data.data.access_token)
-            localStorage.setItem('role', response.data.data.role)
-            localStorage.setItem('username', input.username)
+            store.dispatch(addAuthorization({
+                token: response.data.data.access_token,
+                role: response.data.data.role,
+                username: input.username
+            }))
             browserHistory.push('/')
         })
         .catch((error) => {
-            localStorage.setItem('access_token', null)
-            localStorage.setItem('role', null)
-            localStorage.setItem('username', null)
+            store.dispatch(addAuthorization({
+                token: null,
+                role: null,
+                username: null
+            }))
             alert(error)
         })
 }
