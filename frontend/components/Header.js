@@ -6,11 +6,11 @@ import IconButton from 'material-ui/IconButton'
 import Menu from 'material-ui/svg-icons/navigation/menu'
 import {white} from 'material-ui/styles/colors'
 import store from '../store/index'
-import { addAuthorization } from '../actions/index'
+import { signOut } from '../actions/index'
 
 class Header extends React.Component {
     signOut() {
-        store.dispatch(addAuthorization({
+        store.dispatch(signOut({
             token: null,
             role: null,
             username: null

@@ -4,11 +4,10 @@ import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton'
 import {grey500, white} from 'material-ui/styles/colors'
 import TextField from 'material-ui/TextField'
-import {browserHistory} from 'react-router'
+import { browserHistory } from 'react-router'
 import ThemeDefault from '../theme-default'
-import api from '../components/api'
 import store from '../store/index'
-import { addAuthorization } from '../actions/index'
+import { fetchAuthUser } from '../actions/index'
 
 const input = {
     username: null,
@@ -19,25 +18,12 @@ const handleChange = (field, value) => { input[field] = value }
 
 // login
 const loginClick = () => {
-    api.post('login', {
-        username: input.username,
-        password: input.password
-    })
-        .then((response) => {
-            store.dispatch(addAuthorization({
-                token: response.data.data.access_token,
-                role: response.data.data.role,
-                username: input.username
-            }))
-            browserHistory.push('/')
-        })
-        .catch((error) => {
-            store.dispatch(addAuthorization({
-                token: null,
-                role: null,
-                username: null
-            }))
-            alert(error)
+    store.dispatch(fetchAuthUser(input))
+        .then((action) => {
+            if (action.type === 'FETCH_AUTH_USER_SUCCESS')
+                browserHistory.push('/')
+            else
+                alert(action.error.response.data.data.message)
         })
 }
 
